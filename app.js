@@ -2,27 +2,6 @@ const express = require("express");
 
 const app = express();
 
-const port = 5000;
-
-app.get("/", (req, res) => {
-  res.send("Welcome to my favourite movie list.");
-});
-
-app.get("/api/movies", (req, res) => {
-  res.json(movies);
-});
-
-app.get("/api/movies/:id", (req, res) => {
-  const wantedId = parseInt(req.params.id, 10);
-  const movieById = movies.find((e) => e.id === wantedId);
-
-  if (movieById != null) {
-    res.json(movieById);
-  } else {
-    res.sendStatus(404).send("Not Found");
-  }
-});
-
 const movies = [
   {
     id: 1,
@@ -50,13 +29,26 @@ const movies = [
   },
 ];
 
-app.listen(port, (err) => {
-  if (err) {
-    console.error("Something bad happened");
+app.get("/", (req, res) => {
+  res.send("Welcome to my favourite movie list.");
+});
+
+app.get("/api/movies", (req, res) => {
+  res.json(movies);
+});
+
+app.get("/api/movies/:id", (req, res) => {
+  const wantedId = parseInt(req.params.id, 10);
+  const movieById = movies.find((e) => e.id === wantedId);
+
+  if (movieById != null) {
+    res.json(movieById);
   } else {
-    console.log(`Server is listening on ${port}`);
+    res.sendStatus(404).send("Not Found");
   }
 });
+
+module.exports = app;
 
 /* Lance node app.js dans le terminal */
 /* http://localhost:5000/ */
